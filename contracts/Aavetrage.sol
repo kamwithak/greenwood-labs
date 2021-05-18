@@ -418,7 +418,7 @@ interface IERC20 {
 contract Aavetrage {
 
     address constant lendingPoolAddressProviderAddress = address(0x88757f2f99175387aB4C6a4b3067c77A695b0349);
-    address constant daiAddress = address(0x075A36BA8846C6B6F53644fDd3bf17E5151789DC);
+    address constant daiAddress = address(0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD);
     address public bestBorrowToken;
     address public bestSupplyToken;
     uint256 public currentDAI;
