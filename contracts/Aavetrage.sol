@@ -418,7 +418,7 @@ interface IERC20 {
 contract Aavetrage {
 
     address constant lendingPoolAddressProviderAddress = address(0x88757f2f99175387aB4C6a4b3067c77A695b0349);
-    address constant daiAddress = address(0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD);
+    address constant daiAddress = address(0x075A36BA8846C6B6F53644fDd3bf17E5151789DC);
     address public bestBorrowToken;
     address public bestSupplyToken;
     uint256 public currentDAI;
@@ -429,8 +429,6 @@ contract Aavetrage {
     ILendingPool lendingPool;
     ILendingPoolAddressesProvider provider;
     
-    // event Transfer(address indexed from, address indexed to, uint256 value);
-
     enum State {
         IDENTIFYING_ARBITRAGE,
         BEGINNING_ARBITRAGE,
@@ -485,19 +483,15 @@ contract Aavetrage {
         return opportunityExists;
     }
     
-    // function deposit(uint256 _daiAmount) external {
-    //     emit Transfer(msg.sender, address(this), _daiAmount);
-    // }
-    
     /*
         ///
     */
     function guap(uint256 _daiAmount) external returns(address) {
         require(state == State.BEGINNING_ARBITRAGE, "Failed to identify an arbitrage opportunity");
         currentDAI = dai.balanceOf(msg.sender);
-        dai.approve(address(lendingPool), _daiAmount);
-        allowance = dai.allowance(msg.sender, address(lendingPool));
+        dai.approve(provider.getLendingPool(), _daiAmount);
         lendingPool.deposit(daiAddress, _daiAmount, msg.sender, 0);                                     // SafeERC20: low-level call failed'
+        // lendingPool.borrow(bestBorrowToken, 10, 2, 0, msg.sender);
         return provider.getLendingPool();
     }
     
