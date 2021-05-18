@@ -451,7 +451,6 @@ contract Aavetrage {
         
         uint128 minBorrowRate = type(uint128).max;
         uint128 maxSupplyRate = type(uint128).min;
-        // ILendingPool lendingPool = ILendingPool(provider.getLendingPool());
 
         address[] memory activeReserves = lendingPool.getReservesList();
         
