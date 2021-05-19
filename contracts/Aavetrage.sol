@@ -419,7 +419,7 @@ contract Aavetrage {
     using SafeERC20 for IERC20;
 
     address constant lendingPoolAddressProviderAddress = address(0x88757f2f99175387aB4C6a4b3067c77A695b0349);
-    address constant daiAddress = address(0x075A36BA8846C6B6F53644fDd3bf17E5151789DC);
+    address constant collateralAsset = address(0x075A36BA8846C6B6F53644fDd3bf17E5151789DC);
     address public bestBorrowToken;
     address public bestSupplyToken;
     address public aavetrageAddress;
@@ -490,13 +490,13 @@ contract Aavetrage {
         ///
     */
     function guap() external returns(bool) {
-        // require(state == State.BEGINNING_ARBITRAGE, "Please execute guap() first...");
-        IERC20(daiAddress).safeApprove(aavetrageAddress, collateralAmount);                              // This line MUST be manually accomplished via Etherscan
-        IERC20(daiAddress).safeApprove(provider.getLendingPool(), collateralAmount);
-        require(IERC20(daiAddress).allowance(msg.sender, aavetrageAddress) >= collateralAmount, "Allowance criteria for Aavetrage not met...");
-        require(IERC20(daiAddress).allowance(aavetrageAddress, provider.getLendingPool()) >= collateralAmount, "Allowance criteria for LendingPool not met...");
-        IERC20(daiAddress).safeTransferFrom(msg.sender, aavetrageAddress, collateralAmount);
-        lendingPool.deposit(daiAddress, collateralAmount, aavetrageAddress, 0);                          // Failing line, Standard Fail
+        require(state == State.BEGINNING_ARBITRAGE, "Please execute guap() first...");
+        IERC20(collateralAsset).safeApprove(aavetrageAddress, collateralAmount);                              // This line MUST be manually accomplished via Etherscan
+        IERC20(collateralAsset).safeApprove(provider.getLendingPool(), collateralAmount);
+        require(IERC20(collateralAsset).allowance(msg.sender, aavetrageAddress) >= collateralAmount, "Allowance criteria for Aavetrage not met...");
+        require(IERC20(collateralAsset).allowance(aavetrageAddress, provider.getLendingPool()) >= collateralAmount, "Allowance criteria for LendingPool not met...");
+        IERC20(collateralAsset).safeTransferFrom(msg.sender, aavetrageAddress, collateralAmount);
+        lendingPool.deposit(collateralAsset, collateralAmount, aavetrageAddress, 0);                          // Failing line, Standard Fail
         return true;
     }
     
