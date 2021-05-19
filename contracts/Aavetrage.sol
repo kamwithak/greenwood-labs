@@ -435,9 +435,6 @@ contract Aavetrage {
         UNWINDING_ARBITRAGE,
         COMPLETED_ARBITRAGE
     }
-    
-    event Approval(address indexed owner, address indexed spender, uint256 value);
-
   
     constructor() public {
         provider = ILendingPoolAddressesProvider(lendingPoolAddressProviderAddress);
