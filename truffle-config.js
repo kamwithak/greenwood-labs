@@ -11,6 +11,13 @@ module.exports = {
      port: 7545,
      network_id: "*"
    },
+    mainnet_fork: {
+      host: "127.0.0.1",
+      port: "8546",
+      network_id: "*",
+      gasPrice: 1e6,
+      from: process.env.DEVELOPMENT_ADDRESS
+    },
   //  test: {
   //    host: "127.0.0.1",
   //    port: 7545,
