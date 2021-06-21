@@ -488,21 +488,14 @@ contract Aavetrage {
     */
     function guap() external returns(bool) {
         require(state == State.BEGINNING_ARBITRAGE, "Please execute peek() before guap()");
-        IERC20(collateralAsset).safeApprove(aavetrageAddress, collateralAmount);                              // This line MUST be manually accomplished via Etherscan
+        IERC20(collateralAsset).safeApprove(aavetrageAddress, collateralAmount);
         IERC20(collateralAsset).safeApprove(provider.getLendingPool(), collateralAmount);
         require(IERC20(collateralAsset).allowance(msg.sender, aavetrageAddress) >= collateralAmount, "Allowance criteria for Aavetrage not met...");
         require(IERC20(collateralAsset).allowance(aavetrageAddress, provider.getLendingPool()) >= collateralAmount, "Allowance criteria for LendingPool not met...");
         IERC20(collateralAsset).safeTransferFrom(msg.sender, aavetrageAddress, collateralAmount);
-        lendingPool.deposit(collateralAsset, collateralAmount, aavetrageAddress, 0);                          // Failing line, Standard Fail
+        lendingPool.deposit(collateralAsset, collateralAmount, aavetrageAddress, 0);
         return true;
     }
     
-    
-    /*
-        ///
-    */
-    function shut() external {
-        
-    }
     
 }
